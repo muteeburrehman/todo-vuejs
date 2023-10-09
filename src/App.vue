@@ -1,13 +1,16 @@
 <template>
-<the-header title="TODO APP"></the-header>
+  <div id="app">
+    <AddTodo />
+  </div>
 </template>
 
 <script>
-import TheHeader from './components/layout/TheHeader.vue'
-export default{
-components:{
-  TheHeader
-},
+import AddTodo from './components/AddTodo.vue';
 
-}
+export default {
+  components: {
+    AddTodo,
+  },
+};
 </script>
+
