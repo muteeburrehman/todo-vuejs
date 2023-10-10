@@ -9,31 +9,29 @@
       </header>
       <div class="card mt-4">
         <div class="card-body">
-          <div class="input-group mb-3 mt-3">
-            <input
-              v-model="newTask"
-              type="text"
-              class="form-control"
-              placeholder="Add new task"
-            >
-            <button @click="addTask" class="btn btn-primary"><i class="fa-solid fa-plus"></i></button>
-          </div>
-          <div class="to-dos">
-            <div v-for="(task, index) in tasks" :key="index" class="task alert alert-primary">
-              <li :class="{ 'fs-5': true, 'completed': task.completed }" :style="{ 'text-decoration': task.completed ? 'line-through' : 'none' }">{{ task.text }}</li>
-              <button @click="toggleTask(index)" class="checkTask btn btn-success movCh"><i class="fa-solid fa-check"></i></button>
-              <button @click="deleteTask(index)" class="deleteTask btn btn-danger movedel"><i class="fa-solid fa-trash-can"></i></button>
-            </div>
-          </div>
+          
+          <add-todo :add-task="addTask"   @update:newTask="updateNewTask">
+
+          </add-todo>
+
+          <todo-base-item>
+            <toggle-or-remove-todo :toggle-task="toggleTask" :delete-task="deleteTask" :tasks="tasks"></toggle-or-remove-todo>
+        
+        </todo-base-item>
         </div>
       </div>
     </div>
   </template>
   
   <script>
-// import 'bootstrap/dist/css/bootstrap.css';
-// import 'bootstrap/dist/js/bootstrap.bundle';
+
+import TodoBaseItem from './UI/TodoBaseItem.vue'
+import AddTodo from './Resources/AddTodo.vue'
+
+import ToggleOrRemoveTodo from './Resources/ToggleOrRemoveTodo.vue';
+
   export default {
+  components: { TodoBaseItem, ToggleOrRemoveTodo,AddTodo },
     data() {
       return {
         newTask: '',
@@ -58,29 +56,10 @@
           this.tasks.splice(index, 1);
         }
       },
+      updateNewTask(newTask) {
+      this.newTask = newTask;
+    },
     },
   };
   </script>
 
-  <style>
-  
-.task li {
-    list-style: none;
-    text-align: left;
-}
-
-.task {
-    list-style: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.task li {
-    flex: 1; /* Allow the list items to expand and occupy available space */
-}
-
-.movCh, .movedel {
-    margin-left: 6px; /* Add space between buttons */
-}
-  </style>
